@@ -1,6 +1,6 @@
 ### Available Routes
 
-- [GET(Show_all_tweets)](http://localhost:8080/tweets) // http://localhost:port/tweets/
+- [GET(Show_all_tweets)](http://localhost:8080/tweets) // "http://localhost:port/tweets/"
 - [POST(Create_new_tweets)](http://localhost:8080/tweets) // http://localhost:port/tweets/
 - [PUT(Edit_tweets)](http://localhost:8080/tweets/1) // http://localhost:port/tweets/id
 - [DELETE(Delete_tweets)](http://localhost:8080/tweets/3) // http://localhost:port/tweets/id
