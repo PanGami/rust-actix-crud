@@ -5,7 +5,7 @@
 - [PUT - Edit tweets](http://localhost:8080/tweets/1) // localhost:port/tweets/{id}
 - [DELETE - Delete tweets](http://localhost:8080/tweets/3) // localhost:port/tweets/{id}
 
-### crates Used
+### Crates Used
 
 - [actix-web](https://crates.io/crates/actix-web) // Web framework for Rust.
 - [chrono](https://crates.io/crates/chrono) // Date and time library for Rust.
