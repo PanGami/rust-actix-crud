@@ -1,3 +1,6 @@
+### Short Description
+This is a CRUD Project with Actix to learn API with Rust better. In this project we build a simple api that create, read, update and delete with given JSON data, id at endpoint/path
+
 ### Available Routes
 
 - [GET - Show all tweets](http://localhost:8080/tweets) // localhost:port/tweets/
