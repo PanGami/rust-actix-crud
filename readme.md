@@ -1,9 +1,9 @@
 ### Available Routes
 
-- [GET(Show_all_tweets)](http://localhost:8080/tweets) // localhost:port/tweets/
-- [POST(Create_new_tweets)](http://localhost:8080/tweets) // localhost:port/tweets/
-- [PUT(Edit_tweets)](http://localhost:8080/tweets/1) // localhost:port/tweets/{id}
-- [DELETE(Delete_tweets)](http://localhost:8080/tweets/3) // localhost:port/tweets/{id}
+- [GET - Show all tweets](http://localhost:8080/tweets) // localhost:port/tweets/
+- [POST - Create new tweets](http://localhost:8080/tweets) // localhost:port/tweets/
+- [PUT - Edit tweets](http://localhost:8080/tweets/1) // localhost:port/tweets/{id}
+- [DELETE - Delete tweets](http://localhost:8080/tweets/3) // localhost:port/tweets/{id}
 
 ### crates Used
 
