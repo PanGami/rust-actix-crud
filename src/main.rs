@@ -9,8 +9,7 @@ use std::env;
 // We define a custom type for connection pool to use later.
 pub type DbPool = r2d2::Pool<ConnectionManager<PgConnection>>;
 
-mod handlers;
-mod models;
+mod tweets;
 mod schema;
 
 #[actix_web::main] // or #[tokio::main]
@@ -35,11 +34,11 @@ async fn main() -> std::io::Result<()> {
             .app_data(web::Data::new(pool.clone()))
             .wrap(middleware::Logger::default())
             .route("/", web::get().to(|| async { "Actix REST API" }))
-            .service(handlers::index)
-            .service(handlers::create)
-            .service(handlers::show)
-            .service(handlers::update)
-            .service(handlers::destroy)
+            .service(tweets::index)
+            .service(tweets::create)
+            .service(tweets::show)
+            .service(tweets::update)
+            .service(tweets::destroy)
     })
     .bind(format!("{}:{}", app_url, app_port))?
     .run()
