@@ -17,8 +17,4 @@ This is a CRUD Project with Actix to learn API with Rust better. In this project
 - [env_logger](https://crates.io/crates/env_logger) // Implements a logger that con be configured via env.
 - [r2d2](https://crates.io/crates/r2d2) // A generic connection pool.
 - [serde](https://crates.io/crates/serde) // A generic serialization/deserialization framework.
-- [serde_json](https://crates.io/crates/serde_json) // A JSON serialization file format - to read a raw JSON.
-
-### Thanks to
-- [Phonbopit](https://github.com/Phonbopit) 
-- [WebsiteTutorial](https://0xchai.io/blog/restful-api-with-actix)
+- [serde_json](https://crates.io/crates/serde_json) // A JSON serialization file format - to read a raw JSON. 
