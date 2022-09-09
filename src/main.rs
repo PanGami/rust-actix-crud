@@ -19,11 +19,13 @@ async fn main() -> std::io::Result<()> {
 
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
 
-    // set up database connection pool
-    let database_url = env::var("DATABASE_URL").expect("DATABASE_URL Must be set");
-    let app_url = env::var("APP_URL").expect("APP_URL Must be set");
+    // Setting .env to variables
+    let database_url = env::var("DATABASE_URL").expect("DATABASE_URL Must be set");    
     let app_port = env::var("APP_PORT").expect("APP_PORT Must be set");
-    
+    let app_host = env::var("APP_HOST").expect("APP_PORT Must be set");
+    let app_url =  format!("{}:{}", &app_host, &app_port);
+
+    // set up database connection pool    
     let manager = ConnectionManager::<PgConnection>::new(database_url);
     let pool: DbPool = r2d2::Pool::builder()
         .build(manager)
@@ -40,7 +42,7 @@ async fn main() -> std::io::Result<()> {
             .service(tweets::update)
             .service(tweets::destroy)
     })
-    .bind(format!("{}:{}", app_url, app_port))?
+    .bind(&app_url)?
     .run()
     .await
 }
