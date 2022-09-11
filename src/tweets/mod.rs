@@ -1,5 +1,5 @@
 pub mod models;
-mod routes;
+pub mod routes;
 mod action;
 
 pub use models::*;

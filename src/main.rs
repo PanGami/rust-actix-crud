@@ -11,6 +11,7 @@ pub type DbPool = r2d2::Pool<ConnectionManager<PgConnection>>;
 
 mod tweets;
 mod schema;
+mod config;
 
 #[actix_web::main] // or #[tokio::main]
 async fn main() -> std::io::Result<()> {
@@ -35,12 +36,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .app_data(web::Data::new(pool.clone()))
             .wrap(middleware::Logger::default())
-            .route("/", web::get().to(|| async { "Actix REST API" }))
-            .service(tweets::index)
-            .service(tweets::create)
-            .service(tweets::show)
-            .service(tweets::update)
-            .service(tweets::destroy)
+            .configure(config::app::config_path)
     })
     .bind(&app_url)?
     .run()
