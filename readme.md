@@ -3,10 +3,11 @@ This is a CRUD Project with Actix to learn API with Rust better. In this project
 
 ### Available Routes
 
-- [GET - Show all tweets](http://localhost:8080/tweets) // localhost:port/tweets/
-- [POST - Create new tweets](http://localhost:8080/tweets) // localhost:port/tweets/
-- [PUT - Edit tweets](http://localhost:8080/tweets/1) // localhost:port/tweets/{id}
-- [DELETE - Delete tweets](http://localhost:8080/tweets/3) // localhost:port/tweets/{id}
+- [GET - Show all tweets](http://localhost:8080/api/tweets) // localhost:{port}/api/tweets
+- [POST - Create new tweets](http://localhost:8080/api/tweets) // localhost:{port}/api/tweets
+- [GET - Show by id](http://localhost:8080/api/tweets/1) // localhost:{port}/api/tweets/{id}
+- [PUT - Edit tweets](http://localhost:8080/api/tweets/1) // localhost:{port}/api/tweets/{id}
+- [DELETE - Delete tweets](http://localhost:8080/api/tweets/1) // localhost:{port}/api/tweets/{id}
 
 ### Crates Used
 
