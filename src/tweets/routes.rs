@@ -12,8 +12,7 @@ pub async fn create(
     let conn = pool.get()?;
     add_a_tweet(&payload.message, &conn)
   })
-  .await?
-  .map_err(actix_web::error::ErrorInternalServerError)?;
+  .await?;
 
   Ok(HttpResponse::Ok().json(tweet))
 }
@@ -23,8 +22,7 @@ pub async fn index(pool: web::Data<DbPool>) -> Result<HttpResponse, Error> {
     let conn = pool.get()?;
     find_all(&conn)
   })
-  .await?
-  .map_err(actix_web::error::ErrorInternalServerError)?;
+  .await?;
 
   Ok(HttpResponse::Ok().json(tweets))
 }
@@ -34,8 +32,7 @@ pub async fn show(id: web::Path<i32>, pool: web::Data<DbPool>) -> Result<HttpRes
     let conn = pool.get()?;
     find_by_id(id.into_inner(), &conn)
   })
-  .await?
-  .map_err(actix_web::error::ErrorInternalServerError)?;
+  .await?;
 
   Ok(HttpResponse::Ok().json(tweet))
 }
@@ -49,8 +46,7 @@ pub async fn update(
     let conn = pool.get()?;
     update_tweet(id.into_inner(), payload.message.clone(), &conn)
   })
-  .await?
-  .map_err(actix_web::error::ErrorInternalServerError)?;
+  .await?;
 
   Ok(HttpResponse::Ok().json(tweet))
 }
@@ -60,9 +56,8 @@ pub async fn destroy(id: web::Path<i32>, pool: web::Data<DbPool>) -> Result<Http
     let conn = pool.get()?;
     delete_tweet(id.into_inner(), &conn)
   })
-  .await?
-  .map(|tweet| HttpResponse::Ok().json(tweet))
-  .map_err(actix_web::error::ErrorInternalServerError)?;
+  .await?;
+  // .map(|tweet| HttpResponse::Ok().json(tweet))
 
-  Ok(result)
+  Ok(HttpResponse::Ok().json(result))
 }
