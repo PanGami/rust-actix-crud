@@ -1,6 +1,7 @@
 use crate::DbPool;
 
 use actix_web::{web, Error, HttpResponse};
+use crate::{extractors::claims::Claims};
 use super::TweetPayload;
 use super::action::{add_a_tweet,find_all,find_by_id,update_tweet,delete_tweet};
 
@@ -18,7 +19,7 @@ pub async fn create(
   Ok(HttpResponse::Ok().json(tweet))
 }
 
-pub async fn index(pool: web::Data<DbPool>) -> Result<HttpResponse, Error> {
+pub async fn index(pool: web::Data<DbPool>, _claim: Claims) -> Result<HttpResponse, Error> {
   let tweets = web::block(move || {
     let conn = pool.get()?;
     find_all(&conn)

@@ -12,6 +12,7 @@ pub type DbPool = r2d2::Pool<ConnectionManager<PgConnection>>;
 mod tweets;
 mod schema;
 mod config;
+mod extractors;
 
 #[actix_web::main] // or #[tokio::main]
 async fn main() -> std::io::Result<()> {
@@ -35,6 +36,7 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .app_data(web::Data::new(pool.clone()))
+            .wrap(config::cors())
             .wrap(middleware::Logger::default())
             .configure(config::app::config_path)
     })
