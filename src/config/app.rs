@@ -1,15 +1,19 @@
 use actix_web::{web, HttpRequest};
 use crate::tweets;
+use crate::auth::create_google_client;
+use crate::auth::action::auth_google;
 
 async fn index(_req: HttpRequest) -> String {
     format!("TEST!")
 }
 
 pub fn config_path(config: &mut web::ServiceConfig) { 
+    let google_client = create_google_client();
+    let auth = auth_google(google_client.clone());
     config.service(
         web::scope("")            
             // Anggap disini API login logout dan auth
-            .route("/", web::get().to(index)) //default endpoint
+            .route("/", web::get().to(index)) //default endpoint        
             .service(
                 web::scope("api")
                 .route("", web::get().to(index)) //default api endpoint                       
