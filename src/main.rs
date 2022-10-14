@@ -11,6 +11,7 @@ use std::env;
 pub type DbPool = r2d2::Pool<ConnectionManager<PgConnection>>;
 
 mod tweets;
+mod session;
 mod schema;
 mod config;
 
