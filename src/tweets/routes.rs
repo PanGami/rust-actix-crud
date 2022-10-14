@@ -102,8 +102,8 @@ pub async fn renew_key_session(session: Session) -> Result<HttpResponse, Error> 
 }
 
 pub async fn entries_session(session: Session) -> Result<HttpResponse, Error> {
-  session.entries();
-  Ok(HttpResponse::Ok().json("Session Entries"))
+  let entries: Vec<_> = session.entries().clone().into_iter().collect();
+  Ok(HttpResponse::Ok().json(entries))
 }
 
 pub async fn status_session(session: Session) -> Result<HttpResponse, Error> {
