@@ -1,7 +1,8 @@
 #[macro_use]
 extern crate diesel;
 
-use actix_web::{middleware, web, App, HttpServer};
+use actix_web::{cookie::{time, Key}, middleware, web, App, HttpServer};
+use actix_session::{config::PersistentSession, storage::RedisActorSessionStore, SessionMiddleware};
 use diesel::prelude::*;
 use diesel::r2d2::{self, ConnectionManager};
 use std::env;
@@ -25,6 +26,7 @@ async fn main() -> std::io::Result<()> {
     let app_port = env::var("APP_PORT").expect("APP_PORT Must be set");
     let app_host = env::var("APP_HOST").expect("APP_PORT Must be set");
     let app_url =  format!("{}:{}", &app_host, &app_port);
+    let secret_key = Key::generate();
 
     // set up database connection pool    
     let manager = ConnectionManager::<PgConnection>::new(database_url);
@@ -35,6 +37,17 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .app_data(web::Data::new(pool.clone()))
+            .wrap(
+                SessionMiddleware::builder(
+                    RedisActorSessionStore::new("127.0.0.1:6379"),
+                    secret_key.clone(),
+                )
+                .session_lifecycle(
+                    PersistentSession::default().session_ttl(time::Duration::hours(1)),
+                )
+                .cookie_secure(false)
+                .build(),
+            )
             .wrap(middleware::Logger::default())
             .configure(config::app::config_path)
     })
