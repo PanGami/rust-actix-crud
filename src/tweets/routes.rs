@@ -107,7 +107,15 @@ pub async fn entries_session(session: Session) -> Result<HttpResponse, Error> {
 }
 
 pub async fn status_session(session: Session) -> Result<HttpResponse, Error> {
-  session.entries();
+  //Bisa untuk check, testing purpose ataupun match dengan tambahan 
+  // actix_session:SessionStatus;
+
+  // Contoh seperti 
+  // assert_eq!(session.status(), SessionStatus::Unchanged);
+  // session.purge();
+  // assert_eq!(session.status(), SessionStatus::Purged);
+
+  session.status();
   Ok(HttpResponse::Ok().json("Session status"))
 }
 
