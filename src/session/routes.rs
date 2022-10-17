@@ -1,28 +1,40 @@
 
 use actix_session::Session;
-use actix_web::{Error, HttpResponse};
+use actix_web::{web, Error, HttpResponse};
+use serde::{Deserialize, Serialize};
 
-pub async fn add_session(session: Session) -> Result<HttpResponse, Error> {
-    session.insert("value", "Hello There!");
-    Ok(HttpResponse::Ok().json("Session value Added"))
+#[derive(Debug,Deserialize,Serialize)]
+pub struct InputSession {
+  key: String,
+  value: String,
+}
+
+#[derive(Debug,Deserialize,Serialize)]
+pub struct GetSession {
+  key: String
+}
+
+pub async fn add_session(payload: web::Json<InputSession>, session: Session) -> Result<HttpResponse, Error> {
+    session.insert(&payload.key, &payload.value).expect("Error inserting session");
+    Ok(HttpResponse::Ok().body(format!("Success! added {} : {}", &payload.key, &payload.value)))
   }
   
-  pub async fn get_session(session: Session) -> Result<HttpResponse, Error> {
-    if let Some(value) = session.get::<String>("value")? {
-      Ok(HttpResponse::Ok().body(format!("Here is your Session! {value}")))
+  pub async fn get_session(payload: web::Json<GetSession>, session: Session) -> Result<HttpResponse, Error> {
+    if let Some(value) = session.get::<String>(&payload.key)? {
+      Ok(HttpResponse::Ok().body(format!("Here is your Session data on key {} : {}", &payload.key, value)))
   } else {
-      Ok(HttpResponse::Ok().json("No Session data Found!"))
+      Ok(HttpResponse::Ok().json("No Session data in key Found!"))
     }
   }
   
-  pub async fn update_session(session: Session) -> Result<HttpResponse, Error> {
-    session.insert("value", "updated");
+  pub async fn update_session(payload: web::Json<InputSession>, session: Session) -> Result<HttpResponse, Error> {
+    session.insert(&payload.key, &payload.value);
     Ok(HttpResponse::Ok().json("Session Value updated"))
   }
   
-  pub async fn delete_data_session(session: Session) -> Result<HttpResponse, Error> {
-    session.remove("value");
-    Ok(HttpResponse::Ok().json("Session Value deleted"))
+  pub async fn delete_data_session(payload: web::Json<GetSession>, session: Session) -> Result<HttpResponse, Error> {
+    session.remove(&payload.key);
+    Ok(HttpResponse::Ok().json(format!("Session Value deleted on key : {}",&payload.key)))
   }
   
   pub async fn clear_data_session(session: Session) -> Result<HttpResponse, Error> {
