@@ -25,7 +25,7 @@ pub fn config_path(config: &mut web::ServiceConfig) {
                         .service(
                             web::scope("google") // Google Authentication
                                 .route("/", web::get().to(index)) //default
-                                // .route("/login", web::get().to(google::login))        
+                                .route("/login", web::post().to(google::login))        
                                 // .route("/register", web::get().to(auth::register))     
                                 // .route("/logout", web::get().to(auth::logout))      
                         )         
@@ -48,10 +48,10 @@ pub fn config_path(config: &mut web::ServiceConfig) {
                 .service( 
                     web::scope("session") //http://localhost:8080/api/session/
                         .route("", web::get().to(index))                         
-                        .route("/add", web::get().to(session::add_session))   
+                        .route("/add", web::post().to(session::add_session))   
                         .route("/get", web::get().to(session::get_session))   
-                        .route("/update", web::get().to(session::update_session))  
-                        .route("/delete", web::get().to(session::delete_data_session))
+                        .route("/update", web::put().to(session::update_session))  
+                        .route("/delete", web::delete().to(session::delete_data_session))
                         .route("/clear", web::get().to(session::clear_data_session))
                         .route("/renew", web::get().to(session::renew_key_session))
                         .route("/entries", web::get().to(session::entries_session))      
