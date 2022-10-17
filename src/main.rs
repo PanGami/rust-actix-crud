@@ -12,6 +12,7 @@ pub type DbPool = r2d2::Pool<ConnectionManager<PgConnection>>;
 
 mod tweets;
 mod session;
+mod google;
 mod schema;
 mod config;
 

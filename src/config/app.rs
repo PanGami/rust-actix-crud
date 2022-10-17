@@ -1,6 +1,8 @@
 use actix_web::{web, HttpRequest};
+
 use crate::tweets;
 use crate::session;
+use crate::google;
 
 async fn index(_req: HttpRequest) -> String {
     format!("TEST!")
@@ -13,7 +15,28 @@ pub fn config_path(config: &mut web::ServiceConfig) {
             .route("/", web::get().to(index)) //default endpoint
             .service(
                 web::scope("api")
-                .route("", web::get().to(index)) //default api endpoint                       
+                .route("", web::get().to(index)) //default api endpoint  
+                .service(
+                    web::scope("auth")
+                        .route("/", web::get().to(index)) //default authentication 
+                        // .route("/login", web::get().to(auth::login))     
+                        // .route("/register", web::get().to(auth::register))     
+                        // .route("/logout", web::get().to(auth::logout))     
+                        .service(
+                            web::scope("google") // Google Authentication
+                                .route("/", web::get().to(index)) //default
+                                // .route("/login", web::get().to(google::login))        
+                                // .route("/register", web::get().to(auth::register))     
+                                // .route("/logout", web::get().to(auth::logout))      
+                        )         
+                        .service(                            
+                            web::scope("facebook") // Facebook Authentication
+                                .route("/", web::get().to(index)) //default
+                                // .route("/login", web::get().to(auth::login))     
+                                // .route("/register", web::get().to(auth::register))     
+                                // .route("/logout", web::get().to(auth::logout))       
+                        )                
+                )                     
                 .service(
                     web::scope("tweets") // http://localhost:8080/api/tweets/
                         .route("", web::get().to(tweets::index))     
